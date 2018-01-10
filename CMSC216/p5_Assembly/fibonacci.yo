@@ -1,0 +1,54 @@
+  0x000: 308400100000 | 		irmovl 0x1000, %esp     # init stack pointer
+                      |         
+  0x006: f278         |         rdint %edi              # read int
+                      |         
+  0x008: a078         |         pushl %edi              # push param (int) into stack
+  0x00a: 8019000000   |         call fib                # call fib function
+  0x00f: b078         |         popl %edi
+                      |         
+  0x011: f308         |         wrint %eax              # write fib answer 
+  0x013: 8073000000   |         call line               # function to print line
+  0x018: 10           |         halt
+                      |         
+  0x019: a058         | fib:    pushl %ebp              # ON_ENTRY saving old base/frame ptr
+  0x01b: 2045         |         rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+                      | 
+  0x01d: 503508000000 |         mrmovl 8(%ebp), %ebx    # recall param from memory (stack)
+  0x023: 308100000000 |         irmovl $0, %ecx         # check for base case n=0
+  0x029: 6113         |         subl %ecx, %ebx         # edi = edi - 0
+  0x02b: 735c000000   |         je baseA
+                      |         
+  0x030: 308101000000 |         irmovl $1, %ecx         # check for base case n=1
+  0x036: 6113         |         subl %ecx, %ebx         # edi = edi - 1
+  0x038: 7361000000   |         je baseB
+                      |         
+                      |         # n-1
+  0x03d: a038         |         pushl %ebx              # push n-1 onto stack
+  0x03f: 8019000000   |         call fib                # recursive call
+  0x044: b038         |         popl %ebx               # pop it off the stack
+                      |         
+  0x046: 308101000000 |         irmovl $1, %ecx         # find n-2
+  0x04c: 6113         |         subl %ecx, %ebx         # n-2: edx = edx-2
+                      |         # n-2
+  0x04e: a038         |         pushl %ebx
+  0x050: 8019000000   |         call fib
+  0x055: b038         |         popl %ebx
+                      |         
+  0x057: 706e000000   |         jmp end
+                      |         
+  0x05c: 706e000000   | baseA:  jmp end
+                      |         
+  0x061: 308601000000 | baseB:  irmovl $1, %esi         # write base case n=1
+  0x067: 6060         |         addl %esi, %eax
+  0x069: 706e000000   |         jmp end                 
+                      |         
+  0x06e: 2054         | end:    rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+  0x070: b058         |         popl %ebp               # ON_EXIT restore old frame
+  0x072: 90           |         ret
+                      |         
+                      |         #---------------------------#
+                      |         
+  0x073: 30820a000000 | line:   irmovl $10, %edx        # new line
+  0x079: f128         |         wrch %edx
+  0x07b: 90           | 	ret
+                      |         

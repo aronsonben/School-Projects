@@ -1,0 +1,198 @@
+	irmovl 0x1000, %esp     # init stack pointer
+		
+main:   pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+        rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+        
+        irmovl $8, %eax         # set up local variables here
+        subl %eax, %esp
+        irmovl $0, %eax         # reset eax
+        
+        irmovl Data, %esi	# pointer to beginning of Data
+	irmovl $0, %edi         # counter
+		
+mLoop:  rdint %ebx              # read in integer
+                                # check for end of input (-1)
+        # store value in Data
+        rmmovl %ebx, 4(%esi)    # store in Data
+        irmovl $4, %eax         # 4 in eax for ptr arithmetic
+        addl %eax, %esi         # move ptr over 4 bytes
+        
+        # check for -1
+        irmovl $-1, %ecx        # move -1 into ecx for arithmetic
+        rrmovl %ebx, %edx       # copy read in int
+        subl %ecx, %edx         # if edx = -1 -> edx - ecx
+        je endLoop              # -1 - (-1) => -1+1 = 0 jump out
+        irmovl $0, %edx         # just reset edx
+        
+        # increase size if not -1        
+        irmovl $1, %eax         # 1 in eax for counter add
+        addl %eax, %edi         # counter increased by 1
+        irmovl $20, %edx        # max length
+        subl %edi, %edx         # check for max length: max length - count
+        je endLoop              # if max length hit
+        
+        jmp mLoop               # keep going
+        
+endLoop:                        # end of loop
+        irmovl Data, %esi       # make sure esi is pointing to head of Data
+        
+        # getting array_size
+        pushl %esi
+        call readArr            # call read array function
+        popl %esi
+        rrmovl %eax, %ebx       # copy size into another reg
+        rmmovl %ebx, -8(%ebp)   # store size into local variable
+        
+        # getting *start_point
+        irmovl Data, %ecx       # ecx = *start_pt = Data
+        irmovl $4, %eax         
+        multl %eax, %ebx        # size = size * 4 - NOTE: Changing current reg
+        addl %ebx, %ecx         # move start_pt to pt to end of Data
+        irmovl $1, %ebx         # ebx getting changed from size to 1 (for arith)
+        multl %eax, %ebx        # ebx = 4 (bytes)
+        subl %ebx, %ecx         # move start_pt back 4 bytes
+        rmmovl %ecx, -4(%ebp)   # store *start_pt into local variable
+        # this may not be correct but roll with it for now
+        
+        # reverse prefix sum
+        irmovl $0, %eax         # 0 (param)
+        mrmovl -8(%ebp), %ebx   # local variable size
+        mrmovl -4(%ebp), %ecx   # local variable *start_ptr
+        pushl %eax              # push 0 (total param)
+        pushl %ebx              # push size
+        pushl %ecx              # push *start_ptr
+        call rps
+        popl %ecx               # pop all values off
+        popl %ebx
+        popl %eax
+        
+        # print array
+        irmovl Data, %esi       # reassure esi is ptr to beginning of Data
+
+        pushl %esi              # push in *start_ptr FOR NOW
+        call print              # call print_array(int *a)
+        popl %esi               # pop off ptr to Data
+        
+        
+        #------end-----#
+        call line               # call function to print line
+	rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+        popl %ebp               # ON_EXIT restore old base/frame ptr
+	halt
+		
+#---------read_array(data)--------------#
+
+readArr:pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+        rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+        
+        irmovl $4, %eax         # create space for local variable
+        subl %eax, %esp
+        irmovl $0, %eax         # create int var 'size = 0'
+        rmmovl %eax, -4(%ebp)   # store size into local var
+		
+arrLoop:                        # loop through the array
+        irmovl $-1, %ecx        # -1 into ecx
+        mrmovl 4(%esi), %ebx    # get value from Data
+        rrmovl %ebx, %edx       # copy for arithmetic
+        subl %ecx, %edx         # edx=edx-(-1). if = 0, jump out
+        je endArL
+        irmovl $0, %edx         # reset edx
+        
+        mrmovl -4(%ebp), %edx   # restore size local var
+        irmovl $1, %ecx         
+        addl %ecx, %edx         # increase: size++
+        rmmovl %edx, -4(%ebp)   # place local var back
+        
+        irmovl $4, %ecx         # *a++ = move pointer over one (4 bytes)
+        addl %ecx, %esi         # move data 4 bytes
+        
+        jmp arrLoop             # jumps back to top until *a == -1
+endArL:                         # end array loop
+        mrmovl -4(%ebp), %eax   # move size into eax for return
+        rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+        popl %ebp               # ON_EXIT restore old base/frame ptr
+        ret                     # ON_EXIT
+#----------------------------------------#
+
+#----reverse_prefix_sum(int *a, int size, int total)----#
+rps:    pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+        rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+        
+        # check for size != 0
+        mrmovl 12(%ebp), %edx   # move size to edx
+        irmovl $0, %edi
+        subl %edx, %edi         # check for size != 0
+        je end
+        irmovl $0, %edx         # reset edx for safety
+        
+        mrmovl 8(%ebp), %esi    # move *start_ptr to esi
+        mrmovl 4(%esi), %edx    # place value from *start_ptr to edx
+                                # note we overrode edx as size
+        mrmovl 16(%ebp), %eax   # put total into eax for now
+        addl  %eax, %edx        # value at *strt_p (s_p) += total
+                                #         edx            += eax
+        rmmovl %edx, 4(%esi)    # place value back in ptr to Data
+        
+        pushl %edx              # edx is currently the target.
+                                # target gets pushed first, so push here
+        irmovl $1, %edi         # put 1 in edi
+        mrmovl 12(%ebp), %eax   # now put size in eax
+        subl %edi, %eax         # size = size - 1
+        pushl %eax              # push size next
+        
+        irmovl $4, %edi         # 4 into edi for 4 byte movement
+        subl %edi, %esi         # esi is still pointing to Data
+                                # this moves esi back 4 bytes
+        pushl %esi              # pushes new ptr to Data
+        call rps
+        popl %esi               # pop target, size, ptr to Data out
+        popl %eax
+        popl %edx
+        
+end:    
+        rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+        popl %ebp               # ON_EXIT restore old base/frame ptr
+        ret  
+#---------------------------------------#
+
+#-----------print_array(int *a)------------------#
+
+print:  pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+        rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+        
+        mrmovl 8(%ebp), %esi    # get ptr to Data
+pLoop:  mrmovl 4(%esi), %eax    # put value of ptr to Data into eax
+        
+        # check for value == -1
+        irmovl $-1, %ecx
+        rrmovl %eax, %edx       # copy value to edx
+        subl %ecx, %edx         # edx = edx - (-1). (edx is value)
+        je end                  # jump out if equal 0
+        irmovl $0, %edx         # reset edx
+        
+        wrint %eax              # output the value in Data
+        irmovl $32, %ecx        # space character
+        wrch %ecx               # print space
+        
+        irmovl $4, %ecx         # move 4 into ecx (for 4 bytes)
+        addl %ecx, %esi         # move ptr to Data over 4 bytes
+
+        
+        jmp pLoop
+        
+end:            
+	rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+        popl %ebp               # ON_EXIT restore old base/frame ptr
+        ret  
+        
+#------------------------------------#
+
+#------------------------------------------------------#
+        
+line:   irmovl $10, %edx        # new line
+        wrch %edx 
+	ret
+		
+	.align 4
+Data: 	.long 0                 # global variable array-"data"
+

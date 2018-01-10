@@ -1,0 +1,1 @@
+Fun(Type_Int,"main",List[],List[Define(Type_Int,Id "a");Assign(Id "a",Num 100);If(Greater(Id "a",Num 10),List[Assign(Id "a",Num 200)],List[])])

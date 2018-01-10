@@ -1,0 +1,8 @@
+name: public NFA accept
+resources:
+    - public_NFA_accept.ml
+local_resources:
+    - nfa.ml
+    - testUtils.ml
+modules:
+    module0: ocaml public_NFA_accept.ml

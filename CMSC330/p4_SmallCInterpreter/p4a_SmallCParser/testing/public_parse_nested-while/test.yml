@@ -1,0 +1,10 @@
+---
+name: public_parse_nested-while
+resources:
+- nested-while.c
+local_resources:
+- smallc.ml
+- parser.ml
+- prettyprint.ml
+modules:
+  module0: ocaml parser.ml nested-while.c

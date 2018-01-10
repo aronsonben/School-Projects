@@ -1,0 +1,10 @@
+---
+name: public_prettyprint_exp1
+resources:
+- exp1.c
+local_resources:
+- smallc.ml
+- parser.ml
+- prettyprint.ml
+modules:
+  module0: ocaml prettyprint.ml exp1.c

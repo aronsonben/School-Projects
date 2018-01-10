@@ -1,0 +1,22 @@
+# let's see what will happen here
+insert 200 Benito
+insert 100 Fajita
+
+# let's just see where we are at
+display key_count
+display table
+
+# invalid key?
+insert k Boo
+insert 9 Nah
+insert 9000 OverNineThou
+
+display table
+
+# full table - insertion fails
+insert 800 TooMany
+
+# wrong command
+inert 8 T
+
+delete 9000

@@ -1,0 +1,10 @@
+---
+name: public_parse_test2
+resources:
+- test2.c
+local_resources:
+- smallc.ml
+- parser.ml
+- prettyprint.ml
+modules:
+  module0: ocaml parser.ml test2.c

@@ -1,0 +1,8 @@
+name: public str to NFA
+resources:
+    - public_str_to_NFA.ml
+local_resources:
+    - nfa.ml
+    - testUtils.ml
+modules:
+    module0: ocaml public_str_to_NFA.ml

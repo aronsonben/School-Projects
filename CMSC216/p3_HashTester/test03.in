@@ -1,0 +1,44 @@
+# let us do insert
+hhh
+
+# what happened there?
+insert key1 val1
+
+# where it at doe
+display table
+
+insert 000 oneMore
+
+display key_count
+
+delete key1
+
+display table
+
+ruhroh
+
+insert 101 english
+insert 9000 over
+
+search 9000
+
+reset
+
+search 101
+
+display key_count
+
+insert 1 hash
+
+search &&&
+
+# that should fail
+
+insert 
+
+fajita
+benito
+
+delete 1
+
+display table

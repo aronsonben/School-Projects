@@ -1,0 +1,8 @@
+name: public RE to str
+resources:
+    - public_RE_to_str.ml
+local_resources:
+    - nfa.ml
+    - testUtils.ml
+modules:
+    module0: ocaml public_RE_to_str.ml

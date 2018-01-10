@@ -1,0 +1,11 @@
+---
+name: public_eval_test1
+resources:
+- test1.c
+local_resources:
+- smallc.ml
+- evaluate.ml
+- eval.ml
+- Makefile
+modules:
+  module0: ocaml eval.ml test1.c

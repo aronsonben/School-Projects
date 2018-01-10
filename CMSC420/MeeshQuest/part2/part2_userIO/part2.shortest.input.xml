@@ -1,0 +1,30 @@
+<commands
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="part2in.xsd"
+    spatialWidth="128"
+    spatialHeight="128"
+    g="1"
+    pmOrder="3">
+ <createCity name="Atlanta" x="1" y="50" radius="0" color="black"/>
+ <createCity name="Boston" x="100" y="51" radius="0" color="black"/>
+ <createCity name="Charleston" x="50" y="75" radius="0" color="black"/>
+ <createCity name="Denver" x="1" y="100" radius="0" color="black"/>
+ <createCity name="Eugene" x="50" y="100" radius="0" color="black"/>
+ <createCity name="Fargo" x="100" y="100" radius="0" color="black"/>
+ <createCity name="Geneva" x="105" y="105" radius="0" color="black"/>
+ <createCity name="Hartford" x="50" y="25" radius="0" color="black"/>
+ <createCity name="Indianapolis" x="1" y="75" radius="0" color="black"/>
+ <createCity name="Jacksonville" x="64" y="64" radius="0" color="black"/>
+ <createCity name="Krakow" x="25" y="50" radius="0" color="black"/>
+ <createCity name="London" x="100" y="25" radius="0" color="black"/>
+ 
+ <mapRoad start="Fargo" end="Denver"/>
+ <mapRoad start="Denver" end="Charleston"/>
+ <mapRoad start="Atlanta" end="Hartford"/>
+ <mapRoad start="Boston" end="Hartford"/>
+ <mapRoad start="Charleston" end="Boston"/>
+
+ <shortestPath id="51"  start="Atlanta" end="Boston" saveMap="shortestpath.0" saveHTML="shortestpath.0"/>
+ <shortestPath id="52" start="London" end="Atlanta" saveMap="shortestpath.1"/>
+ <shortestPath id="53" start="Atlanta" end="Krakow"/>
+</commands>

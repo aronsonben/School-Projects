@@ -1,0 +1,5 @@
+int main(){
+____int a;
+____a = 100;
+____printf(a);
+}

@@ -1,0 +1,8 @@
+name: public stats
+resources:
+    - public_stats.ml
+local_resources:
+    - nfa.ml
+    - testUtils.ml
+modules:
+    module0: ocaml public_stats.ml

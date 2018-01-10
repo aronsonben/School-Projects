@@ -1,0 +1,31 @@
+# Ben Aronson
+# UID: 113548802
+# ID: baronson
+# CMSC216 - 0301
+# Project 5
+
+# Fibonacci -- fibonacci.ys
+
+	irmovl 0x1000, %esp	# init stack pointer
+
+	rdint %eax     		# read integer
+	pushl %ebx		# push parameter (int) into stack
+	call fib		# call fibonacci function
+	popl %ebx		# remove parameter (int) from stack
+
+	wrint %ebx		# write fibonacci answer
+	call line		# call fnctn for print new line
+	halt 			
+
+
+fib:	pushl %ebp		# ON_ENTRY saving old base/frame ptr
+	rrmovl %esp, %ebp	# ON_ENTRY set new frame ptr
+
+	irmovl $8, %eax		# this is set in case we need local vars
+	subl %eax, %esp		# Subtract 8 bytes to adjust stack
+
+
+
+line: irmovl $10, %edx		% check on this var
+      wrch %edx
+      ret

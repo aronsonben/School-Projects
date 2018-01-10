@@ -1,0 +1,9 @@
+File "nfa.ml", line 331, characters 19-26:
+Error: Signature mismatch:
+       ...
+       Values do not match:
+         val stats : 'a -> unit
+       is not included in
+         val stats : nfa -> int * int * (int * int) list
+       File "nfa.ml", line 89, characters 4-51: Expected declaration
+       File "nfa.ml", line 197, characters 4-9: Actual declaration

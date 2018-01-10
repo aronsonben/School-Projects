@@ -1,0 +1,85 @@
+# Name: Ben Aronosn
+# UID: 113548802
+# ID: baronson
+# CMSC216 0301
+# Project 5
+
+# Palindrome -- palindrome.ys
+
+   	irmovl Data, %esi	# pointer to beginning of Data
+	irmovl $0, %edi		# counter
+	
+	
+Loop:   rdch %ebx		# put first char into %ebx
+	
+	irmovl $4, %eax		# put 4 into %eax for ptr arithmetic
+	irmovl $10, %ecx	# put new line into %ecx
+	subl %ebx, %ecx		# subtract char from new line
+	je Check 		# Break out. Found new line (end of string)
+
+	
+	rmmovl %ebx, 4(%esi)	# put %ebx into global variable
+	addl %eax, %esi		# move ptr to Data over 4 bytes
+	
+	irmovl $1, %eax		# put 1 here for algebra purposes
+	addl %eax, %edi		# add one to counter
+
+	irmovl $20, %edx	# check for max characters - 21 OR 20??????
+	subl %edi, %edx		# edi (counter) - edx (max length)
+	je End	   		# End this. The length of the string is > max_length
+
+	jmp Loop		# Go back through with new char
+
+	
+	# PASS PUBLIC01 BUT NOT PUBLIC02 - "abaa"
+
+
+	
+Check:				# 2nd loop for checking equality of chars
+	irmovl $4, %eax		# For future algebra...
+	multl %eax, %edi	# ...edi (length) * 4 = should give end of Data
+	subl %eax, %edi		# edi - 4 will give ptr to last var in array
+
+	irmovl Data, %ebx	# pointer to beginning of Data
+	irmovl Data, %ecx 	# pointer to end of Data
+
+	addl %edi, %ecx		# ptr arithmetic - moves ecx to end of array
+
+cLoop:	mrmovl 4(%ebx), %esi	# move top into a different register
+	mrmovl 4(%ecx), %edx	# move bottom into diff register
+	       			# CAREFUL - this is getting rid of check register
+
+	addl %eax, %ebx		# ptr arithmetic - move table ptrs along 4 bytes
+	subl %eax, %ecx
+	
+	rrmovl %esi, %eax	# create copy of front char variable
+	
+	subl %edx, %eax		# first char - last char
+	jne No	   		# if ^ != 0 -> chars != 0
+	    			# aka they aren't the same so print N
+
+	irmovl $4, %eax		# keep a counter and keep length? then subtract?
+	rrmovl %ecx, %edx
+	subl %ebx, %edx		# back ptr - front ptr	
+	jle Yes
+
+	
+	jmp cLoop  		# repeat
+
+
+Yes:	irmovl $89, %edi	# put Y into register
+	wrch %edi   		# print Y
+	jmp End
+
+No:	irmovl $78, %edi	# put N into register
+	wrch %edi   		# print N
+	jmp End
+
+
+End:	irmovl $10, %ecx	# print new line down here
+	wrch %ecx
+	
+	halt
+
+        .align 4	  
+Data:   .long 0

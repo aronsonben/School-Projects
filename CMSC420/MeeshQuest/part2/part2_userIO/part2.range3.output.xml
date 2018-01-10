@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<results>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Atlanta"/>
+      <x value="1"/>
+      <y value="50"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Boston"/>
+      <x value="100"/>
+      <y value="50"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Charleston"/>
+      <x value="50"/>
+      <y value="50"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Denver"/>
+      <x value="1"/>
+      <y value="100"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Eugene"/>
+      <x value="50"/>
+      <y value="100"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Fargo"/>
+      <x value="100"/>
+      <y value="100"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Geneva"/>
+      <x value="105"/>
+      <y value="105"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Atlanta"/>
+      <end value="Boston"/>
+    </parameters>
+    <output>
+      <roadCreated end="Boston" start="Atlanta"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Atlanta"/>
+      <end value="Denver"/>
+    </parameters>
+    <output>
+      <roadCreated end="Denver" start="Atlanta"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Atlanta"/>
+      <end value="Eugene"/>
+    </parameters>
+    <output>
+      <roadCreated end="Eugene" start="Atlanta"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Atlanta"/>
+      <end value="Fargo"/>
+    </parameters>
+    <output>
+      <roadCreated end="Fargo" start="Atlanta"/>
+    </output>
+  </success>
+  <success>
+    <command name="rangeCities"/>
+    <parameters>
+      <x value="50"/>
+      <y value="50"/>
+      <radius value="50"/>
+      <saveMap value="part2.public.range.1"/>
+    </parameters>
+    <output>
+      <cityList>
+        <city color="black" name="Eugene" radius="0" x="50" y="100"/>
+        <city color="black" name="Boston" radius="0" x="100" y="50"/>
+        <city color="black" name="Atlanta" radius="0" x="1" y="50"/>
+      </cityList>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Boston"/>
+      <end value="Fargo"/>
+    </parameters>
+    <output>
+      <roadCreated end="Fargo" start="Boston"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Denver"/>
+      <end value="Eugene"/>
+    </parameters>
+    <output>
+      <roadCreated end="Eugene" start="Denver"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Eugene"/>
+      <end value="Fargo"/>
+    </parameters>
+    <output>
+      <roadCreated end="Fargo" start="Eugene"/>
+    </output>
+  </success>
+  <success>
+    <command name="rangeRoads"/>
+    <parameters>
+      <x value="100"/>
+      <y value="100"/>
+      <radius value="15"/>
+      <saveMap value="part2.public.range.2"/>
+    </parameters>
+    <output>
+      <roadList>
+        <road end="Fargo" start="Eugene"/>
+        <road end="Fargo" start="Boston"/>
+        <road end="Fargo" start="Atlanta"/>
+      </roadList>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Fargo"/>
+      <end value="Geneva"/>
+    </parameters>
+    <output>
+      <roadCreated end="Geneva" start="Fargo"/>
+    </output>
+  </success>
+  <success>
+    <command name="rangeCities"/>
+    <parameters>
+      <x value="100"/>
+      <y value="100"/>
+      <radius value="10"/>
+      <saveMap value="part2.public.range.3"/>
+    </parameters>
+    <output>
+      <cityList>
+        <city color="black" name="Geneva" radius="0" x="105" y="105"/>
+        <city color="black" name="Fargo" radius="0" x="100" y="100"/>
+      </cityList>
+    </output>
+  </success>
+  <success>
+    <command name="rangeRoads"/>
+    <parameters>
+      <x value="1"/>
+      <y value="50"/>
+      <radius value="5"/>
+      <saveMap value="part2.public.range.4"/>
+    </parameters>
+    <output>
+      <roadList>
+        <road end="Fargo" start="Atlanta"/>
+        <road end="Eugene" start="Atlanta"/>
+        <road end="Denver" start="Atlanta"/>
+        <road end="Boston" start="Atlanta"/>
+      </roadList>
+    </output>
+  </success>
+</results>

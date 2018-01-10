@@ -1,0 +1,11 @@
+---
+name: public_eval_greater
+resources:
+- greater.c
+local_resources:
+- smallc.ml
+- evaluate.ml
+- eval.ml
+- Makefile
+modules:
+  module0: ocaml eval.ml greater.c

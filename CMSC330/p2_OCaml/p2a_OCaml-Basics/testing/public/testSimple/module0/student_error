@@ -1,0 +1,2 @@
+File "testing/public/testSimple/module0/testSimple.ml", line 7, characters 0-8:
+Error: Unbound value prt_bool

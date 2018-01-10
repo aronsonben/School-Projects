@@ -1,0 +1,2 @@
+File "testing/public/testRecursion0/module0/testRecursion0.ml", line 12, characters 0-8:
+Error: Unbound value prt_bool

@@ -1,0 +1,3 @@
+command: ocaml testRecursion2.ml
+dependencies: [testRecursion2.ml]
+local_dependencies: [basics.ml, testUtils.ml]

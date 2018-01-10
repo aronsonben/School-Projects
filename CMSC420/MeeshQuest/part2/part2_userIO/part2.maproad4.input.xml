@@ -1,0 +1,26 @@
+<commands
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="part2in.xsd"
+	spatialWidth="128"
+	spatialHeight="128"
+	g="3"
+	pmOrder="3">
+ <createCity id="1" name="Baltimore" x="39" y="76" radius="0" color="black"/>
+ <createCity id="2" name="Chicago" x="81" y="47" radius="0"  color="black"/>
+ <createCity id="3" name="Atlanta" x="84" y="64" radius="0"  color="black"/>
+ <createCity id="4" name="Los_Angeles" x="118" y="33" radius="0"  color="black"/>
+ <createCity id="5" name="Miami" x="80" y="25" radius="0"  color="black"/>
+ <createCity id="6" name="Boston" x="54" y="42" radius="0"  color="black"/>
+ <createCity id="7" name="Seattle" x="41" y="84" radius="0"  color="black"/>
+ <createCity id="8" name="Dallas" x="12" y="15" radius="0"  color="black"/>
+ <createCity id="9" name="StLouis" x="64" y="64" radius="0"  color="black"/>
+ <createCity id="10" name="WashingtonDC" x="62" y="28" radius="0"  color="black"/>
+ <createCity id="60" name="OuttaBounds" x="130" y="32" radius="0"  color="black"/>
+ <createCity id="62" name="NewOrleans" x="72" y="64" radius="0"  color="black"/>
+ <mapCity name="Chicago" id="30"/>
+ <mapRoad start="Seattle" end="Dallas"/>
+ <mapRoad start="Boston" end="Miami"/>
+ <mapRoad start="Atlanta" end="NewOrleans"/>
+ <mapRoad start="StLouis" end="WashingtonDC"/>
+ <printPMQuadtree/>
+</commands>

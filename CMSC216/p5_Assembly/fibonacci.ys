@@ -1,0 +1,55 @@
+		irmovl 0x1000, %esp     # init stack pointer
+        
+        rdint %edi              # read int
+        
+        pushl %edi              # push param (int) into stack
+        call fib                # call fib function
+        popl %edi
+        
+        wrint %eax              # write fib answer 
+        call line               # function to print line
+        halt
+        
+fib:    pushl %ebp              # ON_ENTRY saving old base/frame ptr
+        rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+
+        mrmovl 8(%ebp), %ebx    # recall param from memory (stack)
+        irmovl $0, %ecx         # check for base case n=0
+        subl %ecx, %ebx         # edi = edi - 0
+        je baseA
+        
+        irmovl $1, %ecx         # check for base case n=1
+        subl %ecx, %ebx         # edi = edi - 1
+        je baseB
+        
+        # n-1
+        pushl %ebx              # push n-1 onto stack
+        call fib                # recursive call
+        popl %ebx               # pop it off the stack
+        
+        irmovl $1, %ecx         # find n-2
+        subl %ecx, %ebx         # n-2: edx = edx-2
+        # n-2
+        pushl %ebx
+        call fib
+        popl %ebx
+        
+        jmp end
+        
+baseA:  jmp end
+        
+baseB:  irmovl $1, %esi         # write base case n=1
+        addl %esi, %eax
+        jmp end                 
+        
+end:    rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+        popl %ebp               # ON_EXIT restore old frame
+        ret
+        
+        #---------------------------#
+        
+line:   irmovl $10, %edx        # new line
+        wrch %edx
+	ret
+        
+        

@@ -1,0 +1,85 @@
+                      | # Name: Ben Aronosn
+                      | # UID: 113548802
+                      | # ID: baronson
+                      | # CMSC216 0301
+                      | # Project 5
+                      | 
+                      | # Palindrome -- palindrome.ys
+                      | 
+  0x000: 3086ac000000 |    	irmovl Data, %esi	# pointer to beginning of Data
+  0x006: 308700000000 | 	irmovl $0, %edi		# counter
+                      | 	
+                      | 	
+  0x00c: f038         | Loop:   rdch %ebx		# put first char into %ebx
+                      | 	
+  0x00e: 308004000000 | 	irmovl $4, %eax		# put 4 into %eax for ptr arithmetic
+  0x014: 30810a000000 | 	irmovl $10, %ecx	# put new line into %ecx
+  0x01a: 6131         | 	subl %ebx, %ecx		# subtract char from new line
+  0x01c: 7343000000   | 	je Check 		# Break out. Found new line (end of string)
+                      | 
+                      | 	
+  0x021: 403604000000 | 	rmmovl %ebx, 4(%esi)	# put %ebx into global variable
+  0x027: 6006         | 	addl %eax, %esi		# move ptr to Data over 4 bytes
+                      | 	
+  0x029: 308001000000 | 	irmovl $1, %eax		# put 1 here for algebra purposes
+  0x02f: 6007         | 	addl %eax, %edi		# add one to counter
+                      | 
+  0x031: 308214000000 | 	irmovl $20, %edx	# check for max characters - 21 OR 20??????
+  0x037: 6172         | 	subl %edi, %edx		# edi (counter) - edx (max length)
+  0x039: 73a2000000   | 	je End	   		# End this. The length of the string is > max_length
+                      | 
+  0x03e: 700c000000   | 	jmp Loop		# Go back through with new char
+                      | 
+                      | 	
+                      | 	# PASS PUBLIC01 BUT NOT PUBLIC02 - "abaa"
+                      | 
+                      | 
+                      | 	
+  0x043:              | Check:				# 2nd loop for checking equality of chars
+  0x043: 308004000000 | 	irmovl $4, %eax		# For future algebra...
+  0x049: 6407         | 	multl %eax, %edi	# ...edi (length) * 4 = should give end of Data
+  0x04b: 6107         | 	subl %eax, %edi		# edi - 4 will give ptr to last var in array
+                      | 
+  0x04d: 3083ac000000 | 	irmovl Data, %ebx	# pointer to beginning of Data
+  0x053: 3081ac000000 | 	irmovl Data, %ecx 	# pointer to end of Data
+                      | 
+  0x059: 6071         | 	addl %edi, %ecx		# ptr arithmetic - moves ecx to end of array
+                      | 
+  0x05b: 506304000000 | cLoop:	mrmovl 4(%ebx), %esi	# move top into a different register
+  0x061: 502104000000 | 	mrmovl 4(%ecx), %edx	# move bottom into diff register
+                      | 	       			# CAREFUL - this is getting rid of check register
+                      | 
+  0x067: 6003         | 	addl %eax, %ebx		# ptr arithmetic - move table ptrs along 4 bytes
+  0x069: 6101         | 	subl %eax, %ecx
+                      | 	
+  0x06b: 2060         | 	rrmovl %esi, %eax	# create copy of front char variable
+                      | 	
+  0x06d: 6120         | 	subl %edx, %eax		# first char - last char
+  0x06f: 7495000000   | 	jne No	   		# if ^ != 0 -> chars != 0
+                      | 	    			# aka they aren't the same so print N
+                      | 
+  0x074: 308004000000 | 	irmovl $4, %eax		# keep a counter and keep length? then subtract?
+  0x07a: 2012         | 	rrmovl %ecx, %edx
+  0x07c: 6132         | 	subl %ebx, %edx		# back ptr - front ptr	
+  0x07e: 7188000000   | 	jle Yes
+                      | 
+                      | 	
+  0x083: 705b000000   | 	jmp cLoop  		# repeat
+                      | 
+                      | 
+  0x088: 308759000000 | Yes:	irmovl $89, %edi	# put Y into register
+  0x08e: f178         | 	wrch %edi   		# print Y
+  0x090: 70a2000000   | 	jmp End
+                      | 
+  0x095: 30874e000000 | No:	irmovl $78, %edi	# put N into register
+  0x09b: f178         | 	wrch %edi   		# print N
+  0x09d: 70a2000000   | 	jmp End
+                      | 
+                      | 
+  0x0a2: 30810a000000 | End:	irmovl $10, %ecx	# print new line down here
+  0x0a8: f118         | 	wrch %ecx
+                      | 	
+  0x0aa: 10           | 	halt
+                      | 
+  0x0ac:              |         .align 4	  
+  0x0ac: 00000000     | Data:   .long 0

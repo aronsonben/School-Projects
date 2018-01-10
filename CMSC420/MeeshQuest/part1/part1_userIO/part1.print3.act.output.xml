@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<results>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+      <x value="12"/>
+      <y value="20"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Chicago"/>
+      <x value="17"/>
+      <y value="28"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Boston"/>
+      <x value="35"/>
+      <y value="52"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Atlanta"/>
+      <x value="113"/>
+      <y value="108"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Miami"/>
+      <x value="115"/>
+      <y value="111"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="LosAngeles"/>
+      <x value="98"/>
+      <y value="120"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Dallas"/>
+      <x value="115"/>
+      <y value="20"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Philadelphia"/>
+      <x value="50"/>
+      <y value="120"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Chicago"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Boston"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Atlanta"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Miami"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="LosAngeles"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Dallas"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="unmapCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="unmapCity"/>
+    <parameters>
+      <name value="Dallas"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="unmapCity"/>
+    <parameters>
+      <name value="Miami"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="printPRQuadtree"/>
+    <parameters/>
+    <output>
+      <quadtree>
+        <gray x="64" y="64">
+          <white/>
+          <gray x="96" y="96">
+            <white/>
+            <gray x="112" y="112">
+              <black name="LosAngeles" x="98" y="120"/>
+              <white/>
+              <white/>
+              <black name="Atlanta" x="113" y="108"/>
+            </gray>
+            <white/>
+            <white/>
+          </gray>
+          <gray x="32" y="32">
+            <white/>
+            <black name="Boston" x="35" y="52"/>
+            <black name="Chicago" x="17" y="28"/>
+            <white/>
+          </gray>
+          <white/>
+        </gray>
+      </quadtree>
+    </output>
+  </success>
+</results>

@@ -1,0 +1,11 @@
+---
+name: public_eval_nested-if
+resources:
+- nested-if.c
+local_resources:
+- smallc.ml
+- evaluate.ml
+- eval.ml
+- Makefile
+modules:
+  module0: ocaml eval.ml nested-if.c

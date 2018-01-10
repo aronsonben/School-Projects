@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<results>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+      <x value="12"/>
+      <y value="20"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Chicago"/>
+      <x value="17"/>
+      <y value="28"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Boston"/>
+      <x value="35"/>
+      <y value="52"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Chicago"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="deleteCity"/>
+    <parameters>
+      <name value="Chicago"/>
+    </parameters>
+    <output>
+      <cityUnmapped color="black" name="Chicago" radius="2" x="17" y="28"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Boston"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="unmapCity"/>
+    <parameters>
+      <name value="Boston"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="deleteCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+    </parameters>
+    <output>
+      <cityUnmapped color="black" name="Baltimore" radius="2" x="12" y="20"/>
+    </output>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Pittsburgh"/>
+      <x value="73"/>
+      <y value="23"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="deleteCity"/>
+    <parameters>
+      <name value="Boston"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Pittsburgh"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="createCity"/>
+    <parameters>
+      <name value="Portsmouth"/>
+      <x value="87"/>
+      <y value="69"/>
+      <radius value="2"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapCity"/>
+    <parameters>
+      <name value="Portsmouth"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="deleteCity"/>
+    <parameters>
+      <name value="Pittsburgh"/>
+    </parameters>
+    <output>
+      <cityUnmapped color="black" name="Pittsburgh" radius="2" x="73" y="23"/>
+    </output>
+  </success>
+  <success>
+    <command name="printPRQuadtree"/>
+    <parameters/>
+    <output>
+      <quadtree>
+        <black name="Portsmouth" x="87" y="69"/>
+      </quadtree>
+    </output>
+  </success>
+</results>

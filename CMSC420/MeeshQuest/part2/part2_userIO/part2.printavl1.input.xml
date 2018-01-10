@@ -1,0 +1,23 @@
+<commands
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="part2in.xsd"
+    spatialWidth="128"
+    spatialHeight="128"
+    g="1"
+    pmOrder="3">
+ <createCity name="Fargo" x="100" y="100" radius="0" color="black"/>
+ <createCity name="Charleston" x="50" y="50" radius="0" color="black"/>
+ <createCity name="Indianapolis" x="1" y="75" radius="0" color="black"/>   
+ <createCity name="London" x="128" y="64" radius="0" color="black"/>
+ <createCity name="Boston" x="100" y="50" radius="0" color="black"/>  
+ <createCity name="Denver" x="1" y="100" radius="0" color="black"/>   
+ <createCity name="Atlanta" x="1" y="50" radius="0" color="black"/>
+ <createCity name="Jacksonville" x="3" y="74" radius="0" color="black"/>
+ <createCity name="Hartford" x="50" y="75" radius="0" color="black"/>
+ <createCity name="Eugene" x="50" y="100" radius="0" color="black"/>
+ <createCity name="Geneva" x="105" y="105" radius="0" color="black"/>
+ <createCity name="KansasCity" x="64" y="64" radius="0" color="black"/>
+ 
+ 
+ <printAvlTree/>
+</commands>

@@ -1,0 +1,10 @@
+---
+name: public_prettyprint_assign1
+resources:
+- assign1.c
+local_resources:
+- smallc.ml
+- parser.ml
+- prettyprint.ml
+modules:
+  module0: ocaml prettyprint.ml assign1.c

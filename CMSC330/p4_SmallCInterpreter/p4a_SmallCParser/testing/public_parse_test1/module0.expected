@@ -1,0 +1,1 @@
+Fun(Type_Int,"main",List[],List[Define(Type_Int,Id "a");Assign(Id "a",Num 10);Define(Type_Int,Id "b");Assign(Id "b",Num 1);Define(Type_Int,Id "sum");Assign(Id "sum",Num 0);While(Less(Id "b",Id "a"),List[Assign(Id "sum",Sum(Id "sum",Id "b"));Assign(Id "b",Sum(Id "b",Num 1));Print(Id "sum");If(Greater(Id "a",Id "b"),List[Print(Num 10)],List[Print(Num 20)]);Print(Id "sum")])])

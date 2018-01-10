@@ -1,0 +1,8 @@
+name: public NFA move
+resources:
+    - public_NFA_move.ml
+local_resources:
+    - nfa.ml
+    - testUtils.ml
+modules:
+    module0: ocaml public_NFA_move.ml

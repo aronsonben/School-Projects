@@ -1,0 +1,6 @@
+1. The .yaml files have input and expected output. 
+2. To test, './runtest public00.yml', etc.
+3. Notice you must have generated the .yo files associated with your
+   programs in order to run "runtest".
+4. To run the runtest script you need to make the file an executable one (chmod 500 runtest).    
+

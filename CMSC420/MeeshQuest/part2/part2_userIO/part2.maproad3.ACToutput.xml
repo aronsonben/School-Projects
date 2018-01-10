@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<results>
+  <success>
+    <command id="1" name="createCity"/>
+    <parameters>
+      <name value="Baltimore"/>
+      <x value="39"/>
+      <y value="76"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="2" name="createCity"/>
+    <parameters>
+      <name value="Chicago"/>
+      <x value="81"/>
+      <y value="47"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="3" name="createCity"/>
+    <parameters>
+      <name value="Atlanta"/>
+      <x value="84"/>
+      <y value="64"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="4" name="createCity"/>
+    <parameters>
+      <name value="Los_Angeles"/>
+      <x value="118"/>
+      <y value="33"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="5" name="createCity"/>
+    <parameters>
+      <name value="Miami"/>
+      <x value="80"/>
+      <y value="25"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="6" name="createCity"/>
+    <parameters>
+      <name value="Boston"/>
+      <x value="54"/>
+      <y value="42"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="7" name="createCity"/>
+    <parameters>
+      <name value="Seattle"/>
+      <x value="41"/>
+      <y value="84"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="8" name="createCity"/>
+    <parameters>
+      <name value="Dallas"/>
+      <x value="12"/>
+      <y value="15"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="9" name="createCity"/>
+    <parameters>
+      <name value="StLouis"/>
+      <x value="64"/>
+      <y value="64"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="60" name="createCity"/>
+    <parameters>
+      <name value="OuttaBounds"/>
+      <x value="130"/>
+      <y value="32"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="62" name="createCity"/>
+    <parameters>
+      <name value="NewOrleans"/>
+      <x value="72"/>
+      <y value="64"/>
+      <radius value="0"/>
+      <color value="black"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="30" name="mapCity"/>
+    <parameters>
+      <name value="Chicago"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command id="31" name="mapCity"/>
+    <parameters>
+      <name value="StLouis"/>
+    </parameters>
+    <output/>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Seattle"/>
+      <end value="Dallas"/>
+    </parameters>
+    <output>
+      <roadCreated end="Dallas" start="Seattle"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Miami"/>
+      <end value="Boston"/>
+    </parameters>
+    <output>
+      <roadCreated end="Boston" start="Miami"/>
+    </output>
+  </success>
+  <success>
+    <command name="mapRoad"/>
+    <parameters>
+      <start value="Atlanta"/>
+      <end value="NewOrleans"/>
+    </parameters>
+    <output>
+      <roadCreated end="NewOrleans" start="Atlanta"/>
+    </output>
+  </success>
+  <success>
+    <command name="printPMQuadtree"/>
+    <parameters/>
+    <output>
+      <quadtree order="3">
+        <gray x="64" y="64">
+          <gray x="32" y="96">
+            <white/>
+            <white/>
+            <white/>
+            <gray x="48" y="80">
+              <black cardinality="2">
+                <city color="black" name="Seattle" radius="0" x="41" y="84"/>
+                <road end="Seattle" start="Dallas"/>
+              </black>
+              <white/>
+              <black cardinality="1">
+                <road end="Seattle" start="Dallas"/>
+              </black>
+              <black cardinality="1">
+                <isolatedCity color="black" name="StLouis" radius="0" x="64" y="64"/>
+              </black>
+            </gray>
+          </gray>
+          <gray x="96" y="96">
+            <white/>
+            <white/>
+            <gray x="80" y="80">
+              <white/>
+              <white/>
+              <gray x="72" y="72">
+                <white/>
+                <white/>
+                <gray x="68" y="68">
+                  <white/>
+                  <white/>
+                  <black cardinality="1">
+                    <isolatedCity color="black" name="StLouis" radius="0" x="64" y="64"/>
+                  </black>
+                  <black cardinality="2">
+                    <city color="black" name="NewOrleans" radius="0" x="72" y="64"/>
+                    <road end="NewOrleans" start="Atlanta"/>
+                  </black>
+                </gray>
+                <black cardinality="2">
+                  <city color="black" name="NewOrleans" radius="0" x="72" y="64"/>
+                  <road end="NewOrleans" start="Atlanta"/>
+                </black>
+              </gray>
+              <black cardinality="2">
+                <city color="black" name="Atlanta" radius="0" x="84" y="64"/>
+                <road end="NewOrleans" start="Atlanta"/>
+              </black>
+            </gray>
+            <white/>
+          </gray>
+          <gray x="32" y="32">
+            <black cardinality="1">
+              <road end="Seattle" start="Dallas"/>
+            </black>
+            <gray x="48" y="48">
+              <black cardinality="1">
+                <road end="Seattle" start="Dallas"/>
+              </black>
+              <black cardinality="1">
+                <isolatedCity color="black" name="StLouis" radius="0" x="64" y="64"/>
+              </black>
+              <white/>
+              <black cardinality="2">
+                <city color="black" name="Boston" radius="0" x="54" y="42"/>
+                <road end="Miami" start="Boston"/>
+              </black>
+            </gray>
+            <black cardinality="2">
+              <city color="black" name="Dallas" radius="0" x="12" y="15"/>
+              <road end="Seattle" start="Dallas"/>
+            </black>
+            <white/>
+          </gray>
+          <gray x="96" y="32">
+            <gray x="80" y="48">
+              <gray x="72" y="56">
+                <gray x="68" y="60">
+                  <black cardinality="1">
+                    <isolatedCity color="black" name="StLouis" radius="0" x="64" y="64"/>
+                  </black>
+                  <black cardinality="2">
+                    <city color="black" name="NewOrleans" radius="0" x="72" y="64"/>
+                    <road end="NewOrleans" start="Atlanta"/>
+                  </black>
+                  <white/>
+                  <white/>
+                </gray>
+                <black cardinality="2">
+                  <city color="black" name="NewOrleans" radius="0" x="72" y="64"/>
+                  <road end="NewOrleans" start="Atlanta"/>
+                </black>
+                <white/>
+                <white/>
+              </gray>
+              <black cardinality="2">
+                <city color="black" name="Atlanta" radius="0" x="84" y="64"/>
+                <road end="NewOrleans" start="Atlanta"/>
+              </black>
+              <black cardinality="1">
+                <road end="Miami" start="Boston"/>
+              </black>
+              <black cardinality="1">
+                <isolatedCity color="black" name="Chicago" radius="0" x="81" y="47"/>
+              </black>
+            </gray>
+            <white/>
+            <black cardinality="2">
+              <city color="black" name="Miami" radius="0" x="80" y="25"/>
+              <road end="Miami" start="Boston"/>
+            </black>
+            <white/>
+          </gray>
+        </gray>
+      </quadtree>
+    </output>
+  </success>
+</results>

@@ -1,0 +1,20 @@
+*************************
+* Running Tests Locally *
+*************************
+
+To run tests, simply run:
+    ruby test_all.rb
+
+To see more detailed output, run:
+    ruby test_all.rb -v
+You almost definitely won't need to use this mode, as it's more for internal debugging, but it's there if you want it for some reason.
+
+************************
+* Checking test output *
+************************
+
+If you fail a test, you can find the testing code in the testing/public directory
+Inside of each test folder, there are folders named module*
+    These numbers line up with the modules that are named when the tests run
+    Often there will only be one module
+Inside of each module directory, you can see your output from your last run, the expected output, and the test file

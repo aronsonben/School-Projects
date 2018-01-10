@@ -1,0 +1,9 @@
+
+int main(){int a;a=100;
+  if(a>10){a=200;
+    if(a < 20){a=300;} else {a=400;}
+  }else{
+    a=500;  
+  }  
+  printf(a+5);
+}

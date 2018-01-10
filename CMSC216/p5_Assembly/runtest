@@ -1,0 +1,107 @@
+#!/usr/local/bin/ruby
+
+require 'yaml'
+
+$PROG = File.basename $0
+
+class IO
+  def here_out=(str)
+    if str =~ /^(\s+)/
+      str.gsub!(/^#$1/m, "")
+    end
+    self.puts str
+  end
+end
+
+def usage
+  $stderr.here_out = <<"  EOF"
+    Usage: #$PROG <test file>
+
+      #$PROG will run the yis Y86 simulator, and test the assembly program
+      named in the test file.  The test file should indicate the inputs
+      to the file, as well as the expected output, following the format
+      shown in the example test file and detailed in the README.
+  
+      #$PROG will report the input used, and if the output matches the
+      expected output (and termination occurs normally), the number of
+      steps used to complete the program's execution.  If output does not
+      match expected output, or there is abnormal termination, the mismatch
+      or exception will be displayed as appropriate.
+
+      If the simulated output matches expected output, and the program
+      exits successfully, #$PROG exits with an exit code of 0; otherwise,
+      the exit code is nonzero.
+  EOF
+  exit 64
+end
+
+test_file = ARGV.shift
+
+usage() if test_file.nil? || ! ARGV.empty?
+test_file_data = YAML.load_file(test_file)
+assembled_file = test_file_data["program"]
+
+if assembled_file !~ /\.yo$/
+  $stderr.puts "The assembled program must be a .yo file!"
+  usage()
+end
+
+$fail = true
+input = test_file_data["input"]
+$laxspace = ! test_file_data["space sensitive"]
+$max_steps = test_file_data["max steps"].to_i
+
+lines = Hash.new
+
+IO.popen("echo #{input} | yis #{assembled_file}") do |sim_out|
+  lines["first"] = sim_out.gets.chomp
+  if (lines["info"] = sim_out.gets) =~ /^PC =/
+    lines["error"] = lines["info"]
+    lines["info"] = sim_out.gets
+  end
+end
+
+lines["info"] or fail("not enough output?!")
+lines["info"].sub!(/^Stopped in (\d+) steps at PC = 0x[a-f0-9]+\.\s+/, "") or
+  fail("bad info line")
+step_count = $1.to_i
+lines["info"].sub!(/Exception '(\w{3})', CC Z=\d S=\d O=\d$/, "") or
+  fail("bad info line")
+exception = $1
+
+expected_output = test_file_data["output"].to_s
+if $laxspace
+  expected_output.strip!
+  expected_output.gsub!(/\s+/, " ")
+  lines["first"].strip!
+  lines["first"].gsub!(/\s+/, " ")
+end
+
+shortened_input = input.size > 10 ? input[0,7] + "..." : input
+
+print "Testing #{assembled_file} with input #{shortened_input}: "
+if lines["first"] != expected_output
+  $stdout.here_out = <<"  EOF"
+    FAILED; output mismatch #{$laxspace ? "" : "(space sensitive)"}
+      Expected: #{expected_output}
+      Received: #{lines["first"]}
+  EOF
+elsif exception != "HLT"
+  puts "FAILED; exception condition #{exception}"
+  puts lines["error"] if lines["error"]
+else
+  $fail = false
+  puts "PASSED in #{step_count} steps."
+end
+
+exit 1 if $fail
+
+if $max_steps && $max_steps > 0
+  print "Efficiency test: Required to be < #$max_steps steps; "
+  if step_count <= $max_steps
+    puts "PASSED!"
+  else
+    puts "FAILED."
+    exit 1
+  end
+end

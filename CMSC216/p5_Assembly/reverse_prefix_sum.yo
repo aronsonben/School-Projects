@@ -1,0 +1,198 @@
+  0x000: 308400100000 | 	irmovl 0x1000, %esp     # init stack pointer
+                      | 		
+  0x006: a058         | main:   pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+  0x008: 2045         |         rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+                      |         
+  0x00a: 308008000000 |         irmovl $8, %eax         # set up local variables here
+  0x010: 6104         |         subl %eax, %esp
+  0x012: 308000000000 |         irmovl $0, %eax         # reset eax
+                      |         
+  0x018: 3086e4010000 |         irmovl Data, %esi	# pointer to beginning of Data
+  0x01e: 308700000000 | 	irmovl $0, %edi         # counter
+                      | 		
+  0x024: f238         | mLoop:  rdint %ebx              # read in integer
+                      |                                 # check for end of input (-1)
+                      |         # store value in Data
+  0x026: 403604000000 |         rmmovl %ebx, 4(%esi)    # store in Data
+  0x02c: 308004000000 |         irmovl $4, %eax         # 4 in eax for ptr arithmetic
+  0x032: 6006         |         addl %eax, %esi         # move ptr over 4 bytes
+                      |         
+                      |         # check for -1
+  0x034: 3081ffffffff |         irmovl $-1, %ecx        # move -1 into ecx for arithmetic
+  0x03a: 2032         |         rrmovl %ebx, %edx       # copy read in int
+  0x03c: 6112         |         subl %ecx, %edx         # if edx = -1 -> edx - ecx
+  0x03e: 7363000000   |         je endLoop              # -1 - (-1) => -1+1 = 0 jump out
+  0x043: 308200000000 |         irmovl $0, %edx         # just reset edx
+                      |         
+                      |         # increase size if not -1        
+  0x049: 308001000000 |         irmovl $1, %eax         # 1 in eax for counter add
+  0x04f: 6007         |         addl %eax, %edi         # counter increased by 1
+  0x051: 308214000000 |         irmovl $20, %edx        # max length
+  0x057: 6172         |         subl %edi, %edx         # check for max length: max length - count
+  0x059: 7363000000   |         je endLoop              # if max length hit
+                      |         
+  0x05e: 7024000000   |         jmp mLoop               # keep going
+                      |         
+  0x063:              | endLoop:                        # end of loop
+  0x063: 3086e4010000 |         irmovl Data, %esi       # make sure esi is pointing to head of Data
+                      |         
+                      |         # getting array_size
+  0x069: a068         |         pushl %esi
+  0x06b: 80d6000000   |         call readArr            # call read array function
+  0x070: b068         |         popl %esi
+  0x072: 2003         |         rrmovl %eax, %ebx       # copy size into another reg
+  0x074: 4035f8ffffff |         rmmovl %ebx, -8(%ebp)   # store size into local variable
+                      |         
+                      |         # getting *start_point
+  0x07a: 3081e4010000 |         irmovl Data, %ecx       # ecx = *start_pt = Data
+  0x080: 308004000000 |         irmovl $4, %eax         
+  0x086: 6403         |         multl %eax, %ebx        # size = size * 4 - NOTE: Changing current reg
+  0x088: 6031         |         addl %ebx, %ecx         # move start_pt to pt to end of Data
+  0x08a: 308301000000 |         irmovl $1, %ebx         # ebx getting changed from size to 1 (for arith)
+  0x090: 6403         |         multl %eax, %ebx        # ebx = 4 (bytes)
+  0x092: 6131         |         subl %ebx, %ecx         # move start_pt back 4 bytes
+  0x094: 4015fcffffff |         rmmovl %ecx, -4(%ebp)   # store *start_pt into local variable
+                      |         # this may not be correct but roll with it for now
+                      |         
+                      |         # reverse prefix sum
+  0x09a: 308000000000 |         irmovl $0, %eax         # 0 (param)
+  0x0a0: 5035f8ffffff |         mrmovl -8(%ebp), %ebx   # local variable size
+  0x0a6: 5015fcffffff |         mrmovl -4(%ebp), %ecx   # local variable *start_ptr
+  0x0ac: a008         |         pushl %eax              # push 0 (total param)
+  0x0ae: a038         |         pushl %ebx              # push size
+  0x0b0: a018         |         pushl %ecx              # push *start_ptr
+  0x0b2: 8035010000   |         call rps
+  0x0b7: b018         |         popl %ecx               # pop all values off
+  0x0b9: b038         |         popl %ebx
+  0x0bb: b008         |         popl %eax
+                      |         
+                      |         # print array
+  0x0bd: 3086e4010000 |         irmovl Data, %esi       # reassure esi is ptr to beginning of Data
+                      | 
+  0x0c3: a068         |         pushl %esi              # push in *start_ptr FOR NOW
+  0x0c5: 8098010000   |         call print              # call print_array(int *a)
+  0x0ca: b068         |         popl %esi               # pop off ptr to Data
+                      |         
+                      |         
+                      |         #------end-----#
+  0x0cc: 80d9010000   |         call line               # call function to print line
+  0x0d1: 2054         | 	rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+  0x0d3: b058         |         popl %ebp               # ON_EXIT restore old base/frame ptr
+  0x0d5: 10           | 	halt
+                      | 		
+                      | #---------read_array(data)--------------#
+                      | 
+  0x0d6: a058         | readArr:pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+  0x0d8: 2045         |         rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+                      |         
+  0x0da: 308004000000 |         irmovl $4, %eax         # create space for local variable
+  0x0e0: 6104         |         subl %eax, %esp
+  0x0e2: 308000000000 |         irmovl $0, %eax         # create int var 'size = 0'
+  0x0e8: 4005fcffffff |         rmmovl %eax, -4(%ebp)   # store size into local var
+                      | 		
+  0x0ee:              | arrLoop:                        # loop through the array
+  0x0ee: 3081ffffffff |         irmovl $-1, %ecx        # -1 into ecx
+  0x0f4: 503604000000 |         mrmovl 4(%esi), %ebx    # get value from Data
+  0x0fa: 2032         |         rrmovl %ebx, %edx       # copy for arithmetic
+  0x0fc: 6112         |         subl %ecx, %edx         # edx=edx-(-1). if = 0, jump out
+  0x0fe: 732a010000   |         je endArL
+  0x103: 308200000000 |         irmovl $0, %edx         # reset edx
+                      |         
+  0x109: 5025fcffffff |         mrmovl -4(%ebp), %edx   # restore size local var
+  0x10f: 308101000000 |         irmovl $1, %ecx         
+  0x115: 6012         |         addl %ecx, %edx         # increase: size++
+  0x117: 4025fcffffff |         rmmovl %edx, -4(%ebp)   # place local var back
+                      |         
+  0x11d: 308104000000 |         irmovl $4, %ecx         # *a++ = move pointer over one (4 bytes)
+  0x123: 6016         |         addl %ecx, %esi         # move data 4 bytes
+                      |         
+  0x125: 70ee000000   |         jmp arrLoop             # jumps back to top until *a == -1
+  0x12a:              | endArL:                         # end array loop
+  0x12a: 5005fcffffff |         mrmovl -4(%ebp), %eax   # move size into eax for return
+  0x130: 2054         |         rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+  0x132: b058         |         popl %ebp               # ON_EXIT restore old base/frame ptr
+  0x134: 90           |         ret                     # ON_EXIT
+                      | #----------------------------------------#
+                      | 
+                      | #----reverse_prefix_sum(int *a, int size, int total)----#
+  0x135: a058         | rps:    pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+  0x137: 2045         |         rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+                      |         
+                      |         # check for size != 0
+  0x139: 50250c000000 |         mrmovl 12(%ebp), %edx   # move size to edx
+  0x13f: 308700000000 |         irmovl $0, %edi
+  0x145: 6127         |         subl %edx, %edi         # check for size != 0
+  0x147: 7393010000   |         je end
+  0x14c: 308200000000 |         irmovl $0, %edx         # reset edx for safety
+                      |         
+  0x152: 506508000000 |         mrmovl 8(%ebp), %esi    # move *start_ptr to esi
+  0x158: 502604000000 |         mrmovl 4(%esi), %edx    # place value from *start_ptr to edx
+                      |                                 # note we overrode edx as size
+  0x15e: 500510000000 |         mrmovl 16(%ebp), %eax   # put total into eax for now
+  0x164: 6002         |         addl  %eax, %edx        # value at *strt_p (s_p) += total
+                      |                                 #         edx            += eax
+  0x166: 402604000000 |         rmmovl %edx, 4(%esi)    # place value back in ptr to Data
+                      |         
+  0x16c: a028         |         pushl %edx              # edx is currently the target.
+                      |                                 # target gets pushed first, so push here
+  0x16e: 308701000000 |         irmovl $1, %edi         # put 1 in edi
+  0x174: 50050c000000 |         mrmovl 12(%ebp), %eax   # now put size in eax
+  0x17a: 6170         |         subl %edi, %eax         # size = size - 1
+  0x17c: a008         |         pushl %eax              # push size next
+                      |         
+  0x17e: 308704000000 |         irmovl $4, %edi         # 4 into edi for 4 byte movement
+  0x184: 6176         |         subl %edi, %esi         # esi is still pointing to Data
+                      |                                 # this moves esi back 4 bytes
+  0x186: a068         |         pushl %esi              # pushes new ptr to Data
+  0x188: 8035010000   |         call rps
+  0x18d: b068         |         popl %esi               # pop target, size, ptr to Data out
+  0x18f: b008         |         popl %eax
+  0x191: b028         |         popl %edx
+                      |         
+  0x193:              | end:    
+  0x193: 2054         |         rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+  0x195: b058         |         popl %ebp               # ON_EXIT restore old base/frame ptr
+  0x197: 90           |         ret  
+                      | #---------------------------------------#
+                      | 
+                      | #-----------print_array(int *a)------------------#
+                      | 
+  0x198: a058         | print:  pushl %ebp              # ON_ENTRY saving old base/frame ptr 
+  0x19a: 2045         |         rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+                      |         
+  0x19c: 506508000000 |         mrmovl 8(%ebp), %esi    # get ptr to Data
+  0x1a2: 500604000000 | pLoop:  mrmovl 4(%esi), %eax    # put value of ptr to Data into eax
+                      |         
+                      |         # check for value == -1
+  0x1a8: 3081ffffffff |         irmovl $-1, %ecx
+  0x1ae: 2002         |         rrmovl %eax, %edx       # copy value to edx
+  0x1b0: 6112         |         subl %ecx, %edx         # edx = edx - (-1). (edx is value)
+  0x1b2: 7393010000   |         je end                  # jump out if equal 0
+  0x1b7: 308200000000 |         irmovl $0, %edx         # reset edx
+                      |         
+  0x1bd: f308         |         wrint %eax              # output the value in Data
+  0x1bf: 308120000000 |         irmovl $32, %ecx        # space character
+  0x1c5: f118         |         wrch %ecx               # print space
+                      |         
+  0x1c7: 308104000000 |         irmovl $4, %ecx         # move 4 into ecx (for 4 bytes)
+  0x1cd: 6016         |         addl %ecx, %esi         # move ptr to Data over 4 bytes
+                      | 
+                      |         
+  0x1cf: 70a2010000   |         jmp pLoop
+                      |         
+  0x1d4:              | end:            
+  0x1d4: 2054         | 	rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+  0x1d6: b058         |         popl %ebp               # ON_EXIT restore old base/frame ptr
+  0x1d8: 90           |         ret  
+                      |         
+                      | #------------------------------------#
+                      | 
+                      | #------------------------------------------------------#
+                      |         
+  0x1d9: 30820a000000 | line:   irmovl $10, %edx        # new line
+  0x1df: f128         |         wrch %edx 
+  0x1e1: 90           | 	ret
+                      | 		
+  0x1e4:              | 	.align 4
+  0x1e4: 00000000     | Data: 	.long 0                 # global variable array-"data"
+                      | 

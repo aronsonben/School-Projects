@@ -1,0 +1,76 @@
+ irmovl 0x1000, %esp     # init stack pointer
+        
+        rdint %edi              # read int
+        irmovl $1, %ebx
+        irmovl $1, %ecx
+        
+        pushl %edi              # push param (int) into stack
+        call fib                # call fib function
+        popl %edi
+        
+        wrint %eax              # write fib answer 
+        call line               # function to print line
+        halt
+        
+fib:    pushl %ebp              # ON_ENTRY saving old base/frame ptr
+        rrmovl %esp, %ebp       # ON_ENTRY set new frame ptr
+        
+
+        subl %ebx, %ecx         # if 1-1=0 go 'store' it
+        je store
+        jmp checkZ
+        
+store:  rrmovl %edi, %ebx       # store param in %ebx
+        
+checkZ:                         # where we check if it is 0
+        mrmovl 8(%ebp), %edi    # retrieve param for math
+        irmovl $0, %esi         # check for n < 0
+        subl %esi, %edi         # can do n-0 b/c if n is less than 0,this
+        jg recur                # won't work and it won't jump
+        
+        jmp baseA               # it will jump to base case n=0 if it
+                                # is less than 0
+        
+recur:                          # loosely defined 'recursion' part
+        mrmovl 8(%ebp), %edi    # retrieve param (n)
+        
+        irmovl $0, %esi         # value 0 for checking base case n-0=0
+        subl %esi, %edi         # then 0-0 would mean base case
+        je baseA
+        
+        irmovl $1, %esi         # value 1 for checking base case n=1
+        subl %esi, %edi         # check for base case (using copy!)
+        je baseB 
+        
+        pushl %edi              # push n-1
+        call fib                # recursively call for F(n-1)
+        popl %edi               # pop n-1
+        
+        rrmovl %edx, %edx       # save (use local variable?)
+        
+        irmovl $2, %ecx         # value 2 into ecx for math
+        subl %ecx, %ebx         # get n-2 (not using copy)
+        
+        
+        pushl %ebx              # push n-2
+        call fib                # recurvise - find F(n-2)
+        popl %ebx               # pop n-2
+        
+        addl %ebx, %esi         # should be set: F(n-1) + F(n-2)
+        rrmovl %esi, %eax       # copy over to %eax
+        jmp end
+        
+baseA:  irmovl $0, %eax         # write base case n=0
+        jmp end
+        
+baseB:  irmovl $1, %eax         # write base case n=1
+        jmp end                 
+        
+end:    rrmovl %ebp, %esp       # ON_EXIT reset stack ptr
+        popl %ebp               # ON_EXIT restore old frame
+        ret
+        
+        #---------------------------#
+        
+line:   irmovl $10, %edx        # new line
+        wrch %edx  

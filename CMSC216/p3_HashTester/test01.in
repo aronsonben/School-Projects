@@ -1,0 +1,9 @@
+insert 100 Benito
+insert 200 Quesadilla
+insert 300 Fajita
+
+search 200 
+
+display key_count
+
+display table

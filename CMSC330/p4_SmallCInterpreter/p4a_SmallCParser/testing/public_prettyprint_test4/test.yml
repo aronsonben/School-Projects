@@ -1,0 +1,10 @@
+---
+name: public_prettyprint_test4
+resources:
+- test4.c
+local_resources:
+- smallc.ml
+- parser.ml
+- prettyprint.ml
+modules:
+  module0: ocaml prettyprint.ml test4.c

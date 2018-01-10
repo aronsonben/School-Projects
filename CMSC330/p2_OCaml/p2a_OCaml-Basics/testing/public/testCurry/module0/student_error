@@ -1,0 +1,2 @@
+File "testing/public/testCurry/module0/testCurry.ml", line 7, characters 0-8:
+Error: Unbound value prt_bool

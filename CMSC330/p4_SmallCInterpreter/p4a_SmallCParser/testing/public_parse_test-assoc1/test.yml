@@ -1,0 +1,11 @@
+---
+name: public_parse_test-assoc1
+resources:
+- test-assoc1.c
+local_resources:
+- smallc.ml
+- parser.ml
+- prettyprint.ml
+- Makefile
+modules:
+  module0: ocaml parser.ml test-assoc1.c

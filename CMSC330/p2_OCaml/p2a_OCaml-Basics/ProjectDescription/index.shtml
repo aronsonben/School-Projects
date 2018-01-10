@@ -1,0 +1,438 @@
+<!--#include virtual="header.html" -->
+
+<body>
+
+<h1 class="title">Project 2a - OCaml basics </h1>
+<center>
+Due 11:59pm Mon, Feb 22, 2016
+</center>
+
+<p>
+
+</center>
+<h2>Introduction</h2>
+
+<p>
+The goal of this project is to get you familiar with programming in
+OCaml. You will have to write a number of small functions, each of
+whose specification is given below. In our reference solution, each
+function's implementation is typically 3-6 lines of code; in a couple
+of cases you will want to write a helper function which will add
+another 3-6 lines.
+</p>
+
+<p>
+<b>This project is due in one week!</b> We recommend you get started
+right away, going from top to bottom, and the problems get
+increasingly more challenging.
+</p>
+
+<h2>Getting Started</h2>
+
+Download the following archive file <a href="p2a.zip">p2a.zip</a>
+and extract its contents.
+<p>
+Along with files used to make direct submissions to the
+submit server (submit.jar, .submit, submit.rb), you will
+find the following project files:
+</p><ul>
+<li>Your OCaml program - <a href="basics.ml">basics.ml</a>
+<li>Test utilities - <a href="testUtils.ml">testUtils.ml</a>
+</li><li>Public tests
+<ul>
+<li> <a href="testSimple.ml">testSimple.ml</a>
+<li> <a href="testCurry.ml">testCurry.ml</a>
+<li> <a href="testRecursion0.ml">testRecursion0.ml</a>
+<li> <a href="testRecursion1.ml">testRecursion1.ml</a>
+<li> <a href="testRecursion2.ml">testRecursion2.ml</a>
+<li> <a href="testRecursion3.ml">testRecursion3.ml</a>
+</li></ul>
+</li><li>Expected outputs for public tests
+<ul>
+<li> <a href="testSimple.out">testSimple.out</a>
+<li> <a href="testCurry.out">testCurry.out</a>
+<li> <a href="testRecursion0.out">testRecursion0.out</a>
+<li> <a href="testRecursion1.out">testRecursion1.out</a>
+<li> <a href="testRecursion2.out">testRecursion2.out</a>
+<li> <a href="testRecursion3.out">testRecursion3.out</a>
+</li></ul>
+<li>Ruby script to run public tests- <a
+href="goTest.rb">goTest.rb</a>. Note that you will need to comment out
+line 20 and uncomment out either line 21 or 22 in this file, depending
+on which platform you are developing your code.
+</li></ul>
+<p>
+
+You may want to use functions from <tt>testUtils.ml</tt> for printing
+debugging messages, but your actual submission in <tt>basics.ml</tt>
+should not print any output nor should it depend on the testUtils.ml
+file in any way.
+
+<p>
+
+To run an individual test, you can type commands like <tt>ocaml
+testRecursion1.ml</tt>. The output from the test will be printed to
+the console. You should compare it to the corresponding <tt>.out</tt>
+to see if it is correct (this is what <tt>goTest.rb</tt> does).
+
+<p>
+
+Note that you must implement your functions with the exact
+parameter and return type specified, or else the submit server
+tests will fail.
+
+<p>
+
+For this project the only OCaml libraries you are allowed to
+use are those defined in the
+<a href="http://caml.inria.fr/pub/docs/manual-ocaml/libref/Pervasives.html">Pervasives</a>
+module loaded by default.
+You are not allowed to use library functions found in any
+other modules, particularly <tt>List</tt> and <tt>Array</tt>.
+
+<p>
+
+<h2>Part A: Simple functions </h2>
+
+Write the following functions:
+<p>
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> head_divisor l
+<td> int list -> bool
+<td> true if the head of the list divides the second element of the list
+<br> false otherwise
+<td> head_divisor [1;2] = true
+<br> head_divisor [2;5] = false
+</tr>
+
+<tr>
+<td> tuple_addr t
+<td> int * int * int -> int
+<td> the sum of the tuple's elements
+<td> tuple_addr (1,2,3) = 6
+<br> tuple_addr (-10,50,30) = 70
+</tr>
+
+<tr>
+<td> caddr_int
+<td> int list -> int
+<td> the second element of the list
+<br> -1 if the list has 0 or 1 elements
+<td> caddr_int [1;2;3] = 2
+<br> caddr_int [1] = -1
+</tr>
+
+</table>
+
+<h2>Part B: Simple Curried Functions</h2>
+
+<p>A curried function is one that takes multiple arguments "one at a
+   time". For example, the following function sub takes two arguments
+   and computes their difference:
+<pre>
+   let sub x y = x - y
+</pre>
+   The type of this function is int -> int -> int. Technically, this
+   says that sub is a function that takes an int and returns a
+   function that takes another int and finally returns the answer,
+   also an int. In other words, we could write
+<pre>
+   sub 2 1
+</pre>
+   and this will produce the answer 1. But we could also do something
+   like this:
+<pre>
+   let f = sub 2 in
+   f 1
+</pre>
+   and this will also produce 1. Notice how we call sub with only one
+   argument, so it returns a function f that takes the second
+   argument. In general, you can think of a function f of the type
+<pre>
+   t1 -> t2 -> t3 -> ... -> tn
+</pre>
+   as a function that takes n-1 arguments of types t1, t2, t3, ...,
+   tn-1 and produces a result of type tn. Such functions are written
+   with OCaml syntax
+<pre>
+   let f a1 a2 a3 ... = body
+</pre>
+   where a1 has type t1, a2 has type t2, etc.
+</p>
+
+Implement the following simple, curried functions:
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> mult_of_n x y
+<td> int -> int -> bool
+<td> whether x is a multiple of y
+<td> mult_of_n 5 5 = true
+<br> mult_of_n 2 3 = false
+</tr>
+
+<tr>
+<td> triple_it x y z
+<td> 'a -> 'b -> 'c -> 'a*'b*'c
+<td> a tuple containing the three arguments, in order
+<td> triple_it 5 5 5 = (5,5,5)
+<br> triple_it "hello" "b" "a" = ("hello","b","a")
+</tr>
+
+<tr>
+<td> maxpair (x,y) (m,n)
+<td> 'a*'b -> 'a*'b -> 'a*'b
+<td> (x,y) if it is larger than (m,n), according to lexicographic
+  ordering
+<br> (m,n) otherwise (see note about comparison functions below)
+<td> maxpair (1,2) (3,4) = (3,4)
+<br> maxpair (1,2) (1,3) = (1,3)
+</tr>
+
+</table>
+
+<p>The OCaml comparison functions (=,&lt;=,&gt;=,&lt;, and
+  &gt;) are polymorphic, so you can give them any two
+  arguments of the same type.</p>
+
+<h2>Part C: Recursive Functions</h2>
+
+The rest of the project asks that you implement a number of recursive
+functions, many of which compute on lists.
+
+<table border="1">
+
+<tr>
+<td> <b>Name</b>
+<td> <b>Type</b>
+<td> <b>Return value</b>
+<td> <b>Example</b>
+</tr>
+
+<tr>
+<td> power_of x y
+<td> int -> int -> bool
+<td> returns true if y is a power of x
+<br> false otherwise
+<td> power_of 2 8 = true
+<br> power_of 0 5 = false
+</tr>
+
+<tr>
+<td> prod l
+<td> int list -> int
+<td> the product of all elements in l
+<br> 1 if l is empty
+<td> prod [5;6] = 30
+<br> prod [0;5;3] = 0
+</tr>
+
+<tr>
+<td> unzip l
+<td> ('a*'b) list -> ('a list)*('b list)
+<td> a pair of lists consisting of the all first and second elements,
+  respectively, of the pairs in l
+<td> unzip [(1,2);(3,4)] = ([1;3],[2;4])
+<br> unzip [(3,7);(4,5);(6,9)] = ([3;4;6],[7;5;9])
+</tr>
+
+<tr>
+<td> maxpairall l
+<td> (int*int) list -> int*int
+<td> the largest pair in input list l, according to lexicographic ordering
+<br> (0,0) if l is empty
+<td> maxpairall [(1,2);(3,4)] = (3,4)
+<br> maxpairall [(1,2);(1,3);(0,0)] = (1,3)
+</tr>
+
+<tr>
+<td> addTail l x
+<td> 'a list -> 'a -> 'a list
+<td> a new list where x is appended to the end of l
+<td> addTail [1;2] 3 = [1;2;3]
+</tr>
+
+<tr>
+<td> get_val x n
+<td> int list -> int -> int
+<td> element of list x at index n (indexes start at 0)
+<br> -1 if n is outside the bounds of the list
+<td> get_val [5;6;7;3] 1 = 6
+<br> get_val [5;6;7;3] 4 = -1
+</tr>
+
+<tr>
+<td> get_vals x y
+<td> int list -> int list -> int list
+<td> list of elements of list x at indexes in list y,
+<br> -1 for any indexes in y are outside the bounds of x (as with get_vals)
+<br> elements must be returned in order listed in y
+<td> get_vals [5;6;7;3] [2;0] = [7;5]
+<br> get_vals [5;6;7;3] [2;4] = [7;-1]
+</tr>
+
+<tr>
+<td> list_swap_val b u v
+<td> 'a list -> 'a -> 'a -> 'a list
+<td> list b with values u,v swapped
+<br> change value of multiple occurrences of u and/or v, if found
+<br> change value for u even if v not found in list, and vice versa
+<td> list_swap_val [5;6;7;3] 7 5 = [7;6;5;3]
+<br> list_swap_val [5;6;3] 7 5 = [7;6;3]
+</tr>
+
+<tr>
+<td> index x v
+<td> 'a list -> 'a -> int
+<td> index of <b>rightmost</a> occurrence of value v in list x
+<br> (indexes start at 0)
+<br> -1 if not found
+<td> index [1;2;2] 1 = 0
+<br> index [1;2;2;3] 2 = 2
+<br> index [1;2;3] 5 = -1
+</tr>
+
+<tr>
+<td> distinct l
+<td> 'a list -> 'a list
+<td> a new list that contains the distinct elements of l, in the same
+  order they appear in l
+<td> distinct [1;2;2] = [1;2]
+<br> distinct [2;1;2;2;3] = [2;1;3]
+</tr>
+
+<tr>
+<td> find_new x y
+<td> 'a list -> 'a list -> 'a list
+<td> list of members of list x not found in list y
+<br> maintain relative order of elements in result
+<td> find_new [4;3;7] [5;6;5;3] = [4;7]
+<br> find_new [5;6;5;3] [4;3;7] = [5;6;5]
+</tr>
+
+<tr>
+<td> power_list l
+<td> int list -> bool
+<td> true if each consecutive element is a power of the previous, false otherwise
+<br> return true for []
+<td> power_list [3;9;81] = true
+<br> power_list [9;7;5] = false
+</tr>
+</table>
+
+<h2>Submission</h2>
+
+You can submit your project in two ways:
+
+<ul>
+<li>
+Submit your basics.ml file directly to the
+<a href="http://submit.cs.umd.edu/">submit server</a>
+by clicking on the submit link in the column "web submission".
+
+<p>
+<img src="submit1.jpg">
+</p><p>
+
+Next, use the submit dialog to submit your basics.ml file directly.
+
+</p><p>
+<img src="submit2.jpg">
+</p><p>
+
+Select your file using the "Browse" button,
+then press the "Submit project!" button.
+You <b>do not</b> need to put it in a Jar or Zip file.
+Some students have mentioned problems
+with using Internet Explorer, because
+submissions being extracted in directories
+(e.g., "C:\My Documents\330\basics.ml") where
+the submit server could not find them.  The
+problems went away when switching to the
+Mozilla Firefox browser.
+
+</p></li><li>
+
+</li><li>
+Submit directly by executing a Java program on a computer
+with Java and network access.  Use the submit.jar file
+from the archive p2a.zip.
+To submit, go to the directory containing your project, then either
+execute submit.rb or type the following command directly:
+<p>
+
+</p><center>
+<tt>
+java -jar submit.jar
+</tt>
+</center>
+<p>
+
+You will be asked to enter your class account and password, then
+all files in the directory (and its subdirectories) will be
+put in a jar file and submitted to the submit server.
+If your submission is successful you will see the message:
+</p><p>
+
+</p><center>
+<tt>
+Successful submission #<submission_number> received for project 2a
+</submission_number></tt>
+</center>
+<p>
+
+</p></li></ul>
+
+<h2>Hints and Tips</h2>
+
+<li>
+Be sure you have read and understand the project grading policies in
+the course syllabus.  Do this well in advance of the project due date.
+
+
+<h2>Academic Integrity</h2>
+
+<p>
+The Campus Senate has adopted a policy asking students to include the
+following statement on each assignment in every course: "I pledge on
+my honor that I have not given or received any unauthorized assistance
+on this assignment."  Consequently your program is requested to
+contain this pledge in a comment near the top.
+
+</p><p>
+Please <b>carefully read</b> the academic honesty section of the
+course syllabus.  <b>Any evidence</b> of impermissible cooperation on
+projects, use of disallowed materials or resources, or unauthorized
+use of computer accounts, <b>will be submitted</b> to the Student
+Honor Council, which could result in an XF for the course, or
+suspension or expulsion from the University.  Be sure you understand
+what you are and what you are not permitted to do in regards to
+academic integrity when it comes to project assignments.  These
+policies apply to all students, and the Student Honor Council does not
+consider lack of knowledge of the policies to be a defense for
+violating them.  Full information is found in the course
+syllabus---please review it at this time.
+
+
+</p></li></td>
+</tr></tbody></table>
+
+</body></html>
